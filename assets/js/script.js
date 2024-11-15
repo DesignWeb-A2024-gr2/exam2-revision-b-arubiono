@@ -16,7 +16,10 @@ const erreurValidation = {
     "formatInvalide" : "Le code produit que vous avez saisie est invalide, il ne respecte pas le format requis.",
     "produitInexistant" : "Aucun produit n'est associé au code de produit saisie."
 };
-
+const inputCodeProduit = document.getElementById('cle-activation');
+const messageErreur = document.getElementById('message-erreur');
+const declarationCheckbox = document.getElementById('declaration');
+const declarationLabel = document.querySelector('label[for="declaration"]');
 
 // Code pour provoquer une animation sur le bouton Activer
 const boutonActiver = document.querySelector('.bouton-activation');
@@ -35,6 +38,36 @@ function isProduitExiste(codeProduit) {
 // =========================================================================
 // Ajoutez votre code plus bas                                             =
 // =========================================================================
+
+
+boutonActiver.addEventListener('submit', ValidationForm);   
+
+function ValidationForm () {
+
+    const valeurCodeProduit = inputCodeProduit.value;
+    messageErreur.style.display = 'none';
+
+    if (!declaration.checked)
+    {
+        declarationLabel.style.color = 'var(--couleur-texte-invalide)';
+        messageErreur.textContent = erreurValidation.terme;
+        messageErreur.style.display = 'block';
+        return false;
+    }
+    if (!REGEX_CODE_PRODUIT.test(valeurCodeProduit))
+    {
+        messageErreur.textContent = erreurValidation.formatInvalide;
+        messageErreur.style.display = 'block';
+        return false;
+    }
+    if (!isProduitExiste(valeurCodeProduit))
+    {
+        messageErreur.textContent = erreurValidation.produitInexistant;
+        messageErreur.style.display = 'block';
+        return false;
+    }
+}
+
 
 
 
